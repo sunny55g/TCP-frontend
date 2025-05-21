@@ -227,14 +227,13 @@ function sendMessage() {
     if (!message) return;
     
     try {
-        const messageData = {
-            type: 'message',
-            content: message,
-            sender: username,
-            timestamp: new Date().toISOString()
-        };
-        
-        ws.send(JSON.stringify(messageData));
+const messageData = {
+    type: 'message',
+    content: message,
+    sender: username,
+    timestamp: new Date().toISOString()
+};
+ws.send(JSON.stringify(messageData));
         addMessageToChat(messageData, true);
         messageInput.value = '';
     } catch (error) {
