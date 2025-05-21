@@ -34,16 +34,17 @@ messageInput.addEventListener('keypress', function(e) {
 // Initialize the application
 function init() {
     updateUIForMode();
-    
+
     // Set default target for easier testing
     if (isSenderMode) {
-        targetInput.value = 'ws://localhost:8080';
+        targetInput.value = 'wss://your-render-backend.onrender.com';
+
     }
 }
 
 // Toggle between sender and receiver modes
 function toggleMode() {
-    // If connected, disconnect first
+    // If connected, disconnect first 
     if (ws) {
         handleDisconnection();
     }
@@ -67,7 +68,7 @@ function updateUIForMode() {
     } else {
         modeDisplay.textContent = 'Receiver';
         toggleModeBtn.textContent = 'Switch to Sender Mode';
-        targetInput.value = 'ws://localhost:8080';
+      targetInput.value = 'wss://your-render-backend.onrender.com';
         targetInput.disabled = true;
     }
 }
@@ -153,7 +154,8 @@ function startWebSocketServer() {
     try {
         // In a real scenario, this would be a separate server file.
         // For demo purposes, we're using a client-side WebSocket
-        ws = new WebSocket('ws://localhost:8080');
+       ws = new WebSocket('wss://tcp-backend-5a85.onrender.com');
+
         
         ws.onopen = () => {
             setConnectedState(true);
