@@ -91,54 +91,50 @@ function handleConnection() {
 
 // Connect as a WebSocket client (sender mode)
 function connectAsClient() {
-    const targetAddress = targetInput.value.trim();
-    
-    if (!targetAddress) {
-        addSystemMessage('Please enter a target address.');
+    const targetAddress = targetInput.value.trim();  // like '49.36.239.1'
+
+    if (!targetAddress || !username) {
+        addSystemMessage('Please enter your name and target address.');
         return;
     }
-    
+
     try {
-        addSystemMessage(`Connecting to ${targetAddress}...`);
-        
-        ws = new WebSocket(targetAddress);
-        
+        addSystemMessage(`Connecting via central server...`);
+        ws = new WebSocket('wss://tcp-backend-5a85.onrender.com');
+
         ws.onopen = () => {
             setConnectedState(true);
             addSystemMessage('Connected successfully!');
-            
-            // Send user information
+
             const initData = {
                 type: 'init',
-                name: username
+                name: username,
+                target: targetAddress  // ← send logical target
             };
             ws.send(JSON.stringify(initData));
-            
-            // Update connection details
+
             localAddressDisplay.textContent = 'Client';
             remoteAddressDisplay.textContent = targetAddress;
         };
-        
+
         ws.onmessage = (event) => {
             handleIncomingMessage(event.data);
         };
-        
+
         ws.onclose = () => {
             setConnectedState(false);
             addSystemMessage('Connection closed.');
-            clearConnectionDetails();
         };
-        
+
         ws.onerror = (error) => {
-            addSystemMessage('Connection error. Please check the target address.');
             console.error('WebSocket error:', error);
-            setConnectedState(false);
+            addSystemMessage('Connection error.');
         };
     } catch (error) {
-        addSystemMessage(`Failed to connect: ${error.message}`);
         console.error('Connection error:', error);
     }
 }
+
 
 // Start WebSocket server (receiver mode)
 function startWebSocketServer() {
