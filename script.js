@@ -37,7 +37,8 @@ function init() {
 
     // Set default target for easier testing
     if (isSenderMode) {
-        targetInput.value = 'wss://tcp-backend-5a85.onrender.com';
+        targetInput.value = '';
+
 
     }
 }
