@@ -69,7 +69,8 @@ function updateUIForMode() {
     } else {
         modeDisplay.textContent = 'Receiver';
         toggleModeBtn.textContent = 'Switch to Sender Mode';
-      targetInput.value = 'wss://your-render-backend.onrender.com';
+      targetInput.value = '';
+        targetInput.placeholder = 'Enter target IP or address';
         targetInput.disabled = true;
     }
 }
